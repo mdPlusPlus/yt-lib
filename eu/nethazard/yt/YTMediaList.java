@@ -62,7 +62,6 @@ public class YTMediaList {
 		}
 		return obj;
 	}
-	//
 	
 	private final String title;
 	private final String youtubeID;

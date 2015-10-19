@@ -137,10 +137,16 @@ public class YTMedia {
 				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path));
 
 				byte[] buffer = new byte[4096];
+				long downloaded = 0;
 				int read;
 				while((read = in.read(buffer)) != -1){
 					if(Config.VERBOSE){
-						System.out.print('.');
+						if(downloaded == 0) {
+							System.out.println();
+						}
+						System.out.print("\r                    \r");
+						downloaded = downloaded + read;
+						System.out.print(downloaded);
 					}
 					out.write(buffer, 0, read);
 				}
