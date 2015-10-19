@@ -3,6 +3,7 @@ package eu.nethazard.yt; /**
  * @since 2014-08-31
  */
 
+import eu.nethazard.yt.muxing.FFMPEGUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

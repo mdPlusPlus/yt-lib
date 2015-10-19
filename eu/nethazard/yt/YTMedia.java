@@ -3,6 +3,8 @@ package eu.nethazard.yt; /**
  * @since 2014-08-31
  */
 
+import eu.nethazard.yt.muxing.FFMPEGUtil;
+
 import java.io.*;
 import java.net.URL;
 
