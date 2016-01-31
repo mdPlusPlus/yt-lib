@@ -121,11 +121,17 @@ public class YTMedia {
 		
 		return path;
 	}
-	
-	public String downloadTo(String targetDir){
+
+	public String getDownloadPath(String targetDir){
 		String ext = getFileExtension();
 		String path = targetDir + File.separator + YTMediaUtil.cleanTitle(title) + "(" + itag + ")" + "." + ext;
-		
+
+		return path;
+	}
+	
+	public String downloadTo(String targetDir){
+		String path = getDownloadPath(targetDir);
+
 		File f = new File(path);
 		if(!f.exists() || (f.exists() && Config.OVERWRITE_EXISTING_FILES)){
 			try {
