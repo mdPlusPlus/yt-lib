@@ -591,22 +591,15 @@ public class YTMediaList {
 	}
 
 	public YTMedia getYTMediaFromItag(int itag) {
-		if(getAvailableItags().contains(itag)){
-			Iterator<YTMedia> it = ytMediaList.iterator();
-			while(it.hasNext()) {
-				YTMedia current = it.next();
-				if(current.getItag() == itag) {
+		if (getAvailableItags().contains(itag)) {
+			for (YTMedia current : ytMediaList) {
+				if (current.getItag() == itag) {
 
 					return current;
 				}
 			}
-
-			return null;
-		}
-		else {
-
-			return null;
 		}
 
+		return null;
 	}
 }
