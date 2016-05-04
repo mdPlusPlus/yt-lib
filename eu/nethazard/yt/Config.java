@@ -1,7 +1,8 @@
 package eu.nethazard.yt; /**
  * @author Mathias Dickenscheid
  * @since 2014-09-07
- * 
+ *
+ * 2016-04-16 1.0.4 fixed dashmpd bug
  * 2015-03-16 1.0.3 added missing itags
  * 2015-03-16 1.0.2 changed how the file name is cleaned
  * 2015-03-16 1.0.1 fix: single 'Representation' entries don't throw an exception anymore
