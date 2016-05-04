@@ -81,36 +81,31 @@ public class YTMediaList {
 		title 			= json.getString("title");
 		youtubeID 		= json.getString("video_id");
 		streamLength 	= json.getInt("length_seconds");
-		
-		
-		String dashmpd = json.getString("dashmpd"); // manifest URL
+
+
+		String dashmpd;
+		try {
+			//TODO: dashmpd does not seem to exist anymore
+			dashmpd = json.getString("dashmpd"); // manifest URL
+		} catch (JSONException e) {
+			dashmpd = null;
+		}
 		String url_encoded_fmt_stream_map = json.getString("url_encoded_fmt_stream_map");
 		String adaptive_fmts = json.getString("adaptive_fmts");
-		
-		encrypted = isManifestEncrypted(dashmpd);
-		if(encrypted){
+
+		if (dashmpd != null && isManifestEncrypted(dashmpd)) {
 			throw new IOException("encrypted content: " + youtubeURL); //TODO EncryptedContentException ?
 		}
 		else{
-			List<YTMedia> dashList = workDash(dashmpd);
+			if (dashmpd != null) {
+				List<YTMedia> dashList = workDash(dashmpd);
+				ytMediaList.addAll(dashList);
+			}
+
 			List<YTMedia> fmtsList = workFmts(url_encoded_fmt_stream_map);
-			List<YTMedia> adaptiveFmtsList = workAdaptiveFmts(adaptive_fmts);
-			
-			/*
-			//TODO remove debug code
-			for(int i  = 0; i < dashList.size(); i++){
-				System.out.println("dashList.get(" + i + "): " + dashList.get(i)); //TODO check verbosity
-			}
-			for(int i  = 0; i < fmtsList.size(); i++){
-				System.out.println("fmtsList.get(" + i + "): " + fmtsList.get(i)); //TODO check verbosity
-			}
-			for(int i  = 0; i < adaptiveFmtsList.size(); i++){
-				System.out.println("adaptiveFmtsList.get(" + i + "): " + adaptiveFmtsList.get(i)); //TODO check verbosity
-			}
-			*/
-			
-			ytMediaList.addAll(dashList);
 			ytMediaList.addAll(fmtsList);
+
+			List<YTMedia> adaptiveFmtsList = workAdaptiveFmts(adaptive_fmts);
 			ytMediaList.addAll(adaptiveFmtsList);
 		}
 	}
