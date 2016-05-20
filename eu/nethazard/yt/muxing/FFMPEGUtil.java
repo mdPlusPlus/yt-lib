@@ -7,6 +7,7 @@ package eu.nethazard.yt.muxing;
 import eu.nethazard.yt.Config;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class FFMPEGUtil {
@@ -149,30 +150,24 @@ public class FFMPEGUtil {
 		String[] pathEnvSplit = pathEnv.split(File.pathSeparator);
 		for(int i = 0; i < pathEnvSplit.length; i++){
 			File check = new File(pathEnvSplit[i]);
-			if(location == null){
-				if(check.isFile()){
-					//if ffmpeg binary is hardcoded into PATH
-					if(check.getPath().endsWith(File.separator + "ffmpeg") || check.getPath().endsWith(File.separator + "ffmpeg.exe")){
-						location = check.getAbsolutePath();
-					}
+			if(check.isFile()){
+				//if ffmpeg binary is hardcoded into PATH
+				if(check.getPath().endsWith(File.separator + "ffmpeg") || check.getPath().endsWith(File.separator + "ffmpeg.exe")){
+					location = check.getAbsolutePath();
+					break;
 				}
-				else if(check.isDirectory()){
-					File[] dirEntries = check.listFiles();
-					for(int j = 0; j < dirEntries.length; j++){
-						File current = dirEntries[j];
-						if(current.isFile()){
-							if(check.getPath().endsWith(File.separator + "ffmpeg") || check.getPath().endsWith(File.separator + "ffmpeg.exe")){
-								location = check.getAbsolutePath();
-							}
+			}
+			if(check.isDirectory()){
+				File[] dirEntries = check.listFiles();
+				for(int j = 0; j < dirEntries.length; j++){
+					File current = dirEntries[j];
+					if(current.isFile()){
+						if(check.getPath().endsWith(File.separator + "ffmpeg") || check.getPath().endsWith(File.separator + "ffmpeg.exe")){
+							location = check.getAbsolutePath();
+							break;
 						}
 					}
 				}
-				else{
-					//not file, not dir, what now?
-				}
-			}
-			else{
-				break;
 			}
 		}
 		
