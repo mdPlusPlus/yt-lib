@@ -1,5 +1,6 @@
-package eu.nethazard.yt; /**
- * @author Mathias Dickenscheid
+package eu.nethazard.yt;
+/**
+ * @author mdPlusPlus
  * @since 2014-09-07
  *
  * 2016-04-16 1.0.4 fixed dashmpd bug

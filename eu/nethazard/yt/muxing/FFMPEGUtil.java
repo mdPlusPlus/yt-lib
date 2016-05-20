@@ -1,7 +1,7 @@
-package eu.nethazard.yt.muxing; /**
- * @author Mathias Dickenscheid
+package eu.nethazard.yt.muxing;
+/**
+ * @author mdPlusPlus
  * @since 2014-08-31
- * @version 1.0
  */
 
 import eu.nethazard.yt.Config;

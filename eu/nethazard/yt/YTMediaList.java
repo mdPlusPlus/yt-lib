@@ -1,5 +1,6 @@
-package eu.nethazard.yt; /**
- * @author Mathias Dickenscheid
+package eu.nethazard.yt;
+/**
+ * @author mdPlusPlus
  * @since 2014-08-31
  */
 
