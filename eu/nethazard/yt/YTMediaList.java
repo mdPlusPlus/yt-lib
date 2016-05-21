@@ -136,11 +136,11 @@ public class YTMediaList {
 		String urlBefore = toStrip.toString();
 		String result;
 		int ampIndex = urlBefore.indexOf("&");
-		if(ampIndex != -1){
-			result = urlBefore.substring(0, ampIndex);
+		if(ampIndex == -1){
+			result = urlBefore;
 		}
 		else{
-			result = urlBefore;
+			result = urlBefore.substring(0, ampIndex);
 		}
 		return new URL(result);
 	}
