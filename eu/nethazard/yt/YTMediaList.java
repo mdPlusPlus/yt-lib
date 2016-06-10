@@ -75,13 +75,13 @@ public class YTMediaList {
 	private List<YTMedia> ytMediaList;
 	
 	private YTMediaList(URL youtubeURL) throws IOException{
-		this.youtubeURL = stripUrl(youtubeURL);
-		ytMediaList 	= new ArrayList<YTMedia>();
-		playerConfig 	= getPlayerConfigString(); //TODO could be null when index is -1
-		JSONObject json = new JSONObject(playerConfig).getJSONObject("args");
-		title 			= json.getString("title");
-		youtubeID 		= json.getString("video_id");
-		streamLength 	= json.getInt("length_seconds");
+		this.youtubeURL 	= stripUrl(youtubeURL);
+		this.ytMediaList 	= new ArrayList<YTMedia>();
+		this.playerConfig 	= getPlayerConfigString(); //TODO could be null when index is -1
+		JSONObject json 	= new JSONObject(playerConfig).getJSONObject("args");
+		this.title 			= json.getString("title");
+		this.youtubeID 		= json.getString("video_id");
+		this.streamLength 	= json.getInt("length_seconds");
 
 
 		String dashmpd;
@@ -94,42 +94,42 @@ public class YTMediaList {
 		String url_encoded_fmt_stream_map = json.getString("url_encoded_fmt_stream_map");
 		String adaptive_fmts = json.getString("adaptive_fmts");
 
-		if (dashmpd != null && isManifestEncrypted(dashmpd)) {
-			throw new IOException("encrypted content: " + youtubeURL); //TODO EncryptedContentException ?
+		if (dashmpd != null && this.isManifestEncrypted(dashmpd)) {
+			throw new IOException("encrypted content: " + this.youtubeURL); //TODO EncryptedContentException ?
 		}
 		else{
 			if (dashmpd != null) {
 				List<YTMedia> dashList = workDash(dashmpd);
-				ytMediaList.addAll(dashList);
+				this.ytMediaList.addAll(dashList);
 			}
 
 			List<YTMedia> fmtsList = workFmts(url_encoded_fmt_stream_map);
-			ytMediaList.addAll(fmtsList);
+			this.ytMediaList.addAll(fmtsList);
 
 			List<YTMedia> adaptiveFmtsList = workAdaptiveFmts(adaptive_fmts);
-			ytMediaList.addAll(adaptiveFmtsList);
+			this.ytMediaList.addAll(adaptiveFmtsList);
 		}
 	}
 	
 	//only for debugging
 	public String getPlayerConfig(){
-		return playerConfig;
+		return this.playerConfig;
 	}
 	
 	public int getLength(){
-		return streamLength;
+		return this.streamLength;
 	}
 	
 	public String getID(){
-		return youtubeID;
+		return this.youtubeID;
 	}
 	
 	public URL getURL(){
-		return youtubeURL;
+		return this.youtubeURL;
 	}
 	
 	public String getTitle(){
-		return title;
+		return this.title;
 	}
 	
 	private URL stripUrl(URL toStrip) throws MalformedURLException{
@@ -149,7 +149,7 @@ public class YTMediaList {
 		String playerConfigString = null;
 		
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(youtubeURL.openStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(this.youtubeURL.openStream()));
 			List<String> lines = new ArrayList<String>();
 			
 			String line = br.readLine(); 
@@ -189,7 +189,7 @@ public class YTMediaList {
 	}
 	
 	public boolean isEncrypted(){
-		return encrypted;
+		return this.encrypted;
 	}
 	
 	private boolean isManifestEncrypted(String dashmpd) throws IOException{
@@ -242,14 +242,14 @@ public class YTMediaList {
 				//is a JSONArray
 				for(int j = 0; j<arr.length(); j++){
 					JSONObject obj = arr.getJSONObject(j);
-					addToDashList(dashList, obj);
+					this.addToDashList(dashList, obj);
 				}
 			}
 			else{
 				//is NOT a JSONArray
 				JSONObject obj = currentEntry.optJSONObject("Representation");
 				if(obj != null){
-					addToDashList(dashList, obj);
+					this.addToDashList(dashList, obj);
 				}
 				else{
 					//should not be necessary, but just in case
