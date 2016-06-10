@@ -67,31 +67,10 @@ public class YTMediaUtil {
 	}
 	
 	public static String convertSeconds(int secs){
-		int remaining = secs;
-		
-		int hours = remaining / 3600;
-		remaining = remaining % 3600;
-		int minutes = remaining / 60;
-		remaining = remaining % 60;
-		int seconds =  remaining;
-		
-		String hh = String.valueOf(hours);
-		if(hh.length() == 1){
-			hh = "0" +  hh;
-		}
-		
-		String mm = String.valueOf(minutes);
-		if(mm.length() == 1){
-			mm = "0" +  mm;
-		}
-		
-		String ss = String.valueOf(seconds);
-		if(ss.length() == 1){
-			ss = "0" +  ss;
-		}
-		
-		String formatted = hh + ":" + mm + ":" + ss;
-		
-		return formatted;
+		return String.format(
+			"%d:%02d:%02d",
+			secs / 3600,
+			(secs % 3600) / 60,
+			secs % 60);
 	}
 }
