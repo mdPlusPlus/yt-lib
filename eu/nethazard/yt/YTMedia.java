@@ -54,63 +54,58 @@ public class YTMedia {
 			}
 		}
 		
-		if(codecs.length > 1){
-			container = true;
-		}
-		else{
-			container = false;
-		}
+		this.container = codecs.length > 1;
 	}
 	
 	public String getTitle(){
-		return title;
+		return this.title;
 	}
 
 	public int getItag() {
-		return itag;
+		return this.itag;
 	}
 
 	public String getType() {
-		return type;
+		return this.type;
 	}
 	
 	public String getCodecs(){
-		return convertCodecsToString();
+		return this.convertCodecsToString();
 	}
 	
 	private String convertCodecsToString(){
 		StringBuilder codecsStringBuilder = new StringBuilder();
 		
 		codecsStringBuilder.append("{");
-		for(int i = 0; i < codecs.length-1; i++){
-			codecsStringBuilder.append(codecs[i] + ",");
+		for(int i = 0; i < this.codecs.length-1; i++){
+			codecsStringBuilder.append(this.codecs[i] + ",");
 		}
-		codecsStringBuilder.append(codecs[codecs.length-1] + "}");
+		codecsStringBuilder.append(this.codecs[this.codecs.length-1] + "}");
 		
 		return codecsStringBuilder.toString();
 	}
 
 	public URL getUrl() {
-		return url;
+		return this.url;
 	}
 	
 	public boolean isContainer(){
-		return container;
+		return this.container;
 	}
 	
 	public String toString(){
 		return "YTMedia:" 
-				+ " itag=" + itag
-				+ " container=" + container
-				+ " type=" + type
-				+ " codecs=" + convertCodecsToString()
-				+ " url=" + url;
+				+ " itag=" + this.itag
+				+ " container=" + this.container
+				+ " type=" + this.type
+				+ " codecs=" + this.convertCodecsToString()
+				+ " url=" + this.url;
 	}
 	
 	public String downloadAndConvertToMp3(String targetDir) throws IOException, InterruptedException{
-		String path = targetDir + File.separator + YTMediaUtil.cleanTitle(title) + "(" + itag + ")" + ".mp3";
-		if(container || (!container && type.startsWith("audio"))){
-			String in = downloadTo(targetDir);
+		String path = targetDir + File.separator + YTMediaUtil.cleanTitle(this.title) + "(" + this.itag + ")" + ".mp3";
+		if(this.container || (!this.container && this.type.startsWith("audio"))){
+			String in = this.downloadTo(targetDir);
 			File inFile = new File(in);
 			File outFile = new File(path);
 			FFMPEGUtil.convertToMp3(inFile, outFile);
@@ -124,14 +119,14 @@ public class YTMedia {
 	}
 
 	public String getDownloadPath(String targetDir){
-		String ext = getFileExtension();
-		String path = targetDir + File.separator + YTMediaUtil.cleanTitle(title) + "(" + itag + ")" + "." + ext;
+		String ext = this.getFileExtension();
+		String path = targetDir + File.separator + YTMediaUtil.cleanTitle(this.title) + "(" + this.itag + ")" + "." + ext;
 
 		return path;
 	}
 	
 	public String downloadTo(String targetDir){
-		String path = getDownloadPath(targetDir);
+		String path = this.getDownloadPath(targetDir);
 
 		File f = new File(path);
 		if(!f.exists() || (f.exists() && Config.OVERWRITE_EXISTING_FILES)){
@@ -140,7 +135,7 @@ public class YTMedia {
 					System.out.println("Downloading to " + f.getAbsolutePath() + " ...");
 				}
 
-				BufferedInputStream in = new BufferedInputStream(url.openStream());
+				BufferedInputStream in = new BufferedInputStream(this.url.openStream());
 				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path));
 
 				byte[] buffer = new byte[4096];
@@ -180,11 +175,11 @@ public class YTMedia {
 	
 	private String getFileExtension(){
 		if(Config.VERBOSE) {
-			System.out.println("type: " + type);
+			System.out.println("type: " + this.type);
 		}
-		String ext = type.substring(type.indexOf("/") + 1);
-		if(!container){
-			String avType = type.substring(0, type.indexOf("/"));
+		String ext = this.type.substring(this.type.indexOf("/") + 1);
+		if(!this.container){
+			String avType = this.type.substring(0, this.type.indexOf("/"));
 			ext = ext + "_" + avType;
 		}
 		if(ext.startsWith("x-")){
