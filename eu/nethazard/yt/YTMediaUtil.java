@@ -68,7 +68,7 @@ public class YTMediaUtil {
 	
 	public static String convertSeconds(int secs){
 		return String.format(
-			"%d:%02d:%02d",
+			"%02d:%02d:%02d",
 			secs / 3600,
 			(secs % 3600) / 60,
 			secs % 60);
