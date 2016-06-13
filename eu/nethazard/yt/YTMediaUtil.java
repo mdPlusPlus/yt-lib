@@ -12,23 +12,32 @@ public class YTMediaUtil {
 	public static String cleanTitle(String title){
 		//TODO regex
 		//TODO out-source to config
+
+		//Clean regex: "^[a-zA-Z0-9Ä-Üä-ü\ß]+$"
+		//Bad signs regex: "[^a-zA-Z0-9Ä-Üä-ü\ß]"
 		
 		String cleanTitle = title;
 		
-		StringBuilder allowedCharsBuilder = new StringBuilder();
-		allowedCharsBuilder.append("0123456789");
-		allowedCharsBuilder.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-		allowedCharsBuilder.append("abcdefghijklmnopqrstuvwxyz");
-		allowedCharsBuilder.append("ÄÖÜ");
-		allowedCharsBuilder.append("äöü");
-		allowedCharsBuilder.append("ß");
-		String allowedChars = allowedCharsBuilder.toString();
+		// StringBuilder allowedCharsBuilder = new StringBuilder();
+		// allowedCharsBuilder.append("0123456789");
+		// allowedCharsBuilder.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+		// allowedCharsBuilder.append("abcdefghijklmnopqrstuvwxyz");
+		// allowedCharsBuilder.append("ÄÖÜ");
+		// allowedCharsBuilder.append("äöü");
+		// allowedCharsBuilder.append("ß");
+		// String allowedChars = allowedCharsBuilder.toString();
 		
-		for(int i = 0; i < cleanTitle.length(); i++){
-			char currentChar = cleanTitle.charAt(i);
-			if(!allowedChars.contains(String.valueOf(currentChar))){
-				cleanTitle = cleanTitle.replace(currentChar, '_');
-			}
+		// for(int i = 0; i < cleanTitle.length(); i++){
+		// 	char currentChar = cleanTitle.charAt(i);
+		// 	if(!allowedChars.contains(String.valueOf(currentChar))){
+		// 		cleanTitle = cleanTitle.replace(currentChar, '_');
+		// 	}
+		// }
+
+		cleanTitle.replace("[^a-zA-Z0-9Ä-Üä-ü\ß]", "_");
+
+		if (!cleanTitle.matches("^[a-zA-Z0-9Ä-Üä-ü\ß]+$")) {
+			//something bad happened
 		}
 		
 		return cleanTitle;
@@ -58,31 +67,10 @@ public class YTMediaUtil {
 	}
 	
 	public static String convertSeconds(int secs){
-		int remaining = secs;
-		
-		int hours = remaining / 3600;
-		remaining = remaining % 3600;
-		int minutes = remaining / 60;
-		remaining = remaining % 60;
-		int seconds =  remaining;
-		
-		String hh = String.valueOf(hours);
-		if(hh.length() == 1){
-			hh = "0" +  hh;
-		}
-		
-		String mm = String.valueOf(minutes);
-		if(mm.length() == 1){
-			mm = "0" +  mm;
-		}
-		
-		String ss = String.valueOf(seconds);
-		if(ss.length() == 1){
-			ss = "0" +  ss;
-		}
-		
-		String formatted = hh + ":" + mm + ":" + ss;
-		
-		return formatted;
+		return String.format(
+			"%02d:%02d:%02d",
+			secs / 3600,
+			(secs % 3600) / 60,
+			secs % 60);
 	}
 }
