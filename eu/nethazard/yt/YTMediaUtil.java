@@ -10,11 +10,10 @@ import java.net.URL;
 public class YTMediaUtil {
 	
 	public static String cleanTitle(String title){
-		//TODO regex
 		//TODO out-source to config
 
-		//Clean regex: "^[a-zA-Z0-9Ä-Üä-ü\ß]+$"
-		//Bad signs regex: "[^a-zA-Z0-9Ä-Üä-ü\ß]"
+		//Clean regex: "^[a-zA-Z0-9Ä-Üä-üß]+$"
+		//Bad signs regex: "[^a-zA-Z0-9Ä-Üä-üß]"
 		
 		String cleanTitle = title;
 		
@@ -34,9 +33,9 @@ public class YTMediaUtil {
 		// 	}
 		// }
 
-		cleanTitle.replace("[^a-zA-Z0-9Ä-Üä-ü\ß]", "_");
+		cleanTitle.replace("[^a-zA-Z0-9Ä-Üä-üß]", "_");
 
-		if (!cleanTitle.matches("^[a-zA-Z0-9Ä-Üä-ü\ß]+$")) {
+		if (!cleanTitle.matches("^[a-zA-Z0-9Ä-Üä-üß]+$")) {
 			//something bad happened
 		}
 		
